@@ -1,45 +1,123 @@
-import Image from 'next/image'
+'use client'
+
+import { SimplePool, Event } from 'nostr-tools';
+import { useEffect, useRef, useState } from 'react';
+import  NotesList from './components/NotesList';
+
+export const RELAYS = [
+  "wss://nostr-pub.wellorder.net",
+  "wss://nostr.drss.io",
+  "wss://nostr.swiss-enigma.ch",
+  "wss://relay.damus.io",
+];
+
+export interface Metadata {
+  name?: string;
+  about?: string;
+  picture?: string;
+  nip05?: string;
+}
 
 export default function Home() {
+
+  const [pool, setPool] = useState<SimplePool | null>(null);
+
+  const [events, setEvents] = useState<Event[]>([]);
+
+  // const [events] = useDebounce(eventsImmediate, 1500);
+
+  const [metadata, setMetadata] = useState<Record<string, Metadata>>({});
+
+  const metadataFetched = useRef<Record<string, boolean>>({});
+
+  const [hashtags, setHashtags] = useState<string[]>([]);
+
+
+  // setup a relays pool
+  useEffect(() => {
+    const _pool = new SimplePool();
+    setPool(_pool);
+
+    return () => {
+      _pool.close(RELAYS);
+    };
+  }, []);
+
+  // subscribe to some events
+  useEffect(() => {
+    if (!pool) return;
+
+    setEvents([]);
+    const sub = pool.sub(RELAYS, [
+      {
+        kinds: [30023],
+        limit: 5,
+        "#t": ["nostr"],
+      },
+    ]);
+
+    sub.on("event", (event: Event) => {
+      console.log(event)
+      setEvents((events) => [...events, event])
+      //setEvents((events) => insertEventIntoDescendingList(events, event));
+    });
+
+    return () => {
+      sub.unsub();
+    };
+  }, [pool]);
+
+  // useEffect(() => {
+  //   if (!pool) return;
+
+  //   const pubkeysToFetch = events
+  //     .filter((event) => metadataFetched.current[event.pubkey] !== true)
+  //     .map((event) => event.pubkey);
+
+  //   pubkeysToFetch.forEach(
+  //     (pubkey) => (metadataFetched.current[pubkey] = true)
+  //   );
+
+  //   const sub = pool.sub(RELAYS, [
+  //     {
+  //       kinds: [0],
+  //       authors: pubkeysToFetch,
+  //     },
+  //   ]);
+
+  //   sub.on("event", (event: Event) => {
+  //     const metadata = JSON.parse(event.content) as Metadata;
+
+  //     setMetadata((cur) => ({
+  //       ...cur,
+  //       [event.pubkey]: metadata,
+  //     }));
+  //   });
+
+  //   sub.on("eose", () => {
+  //     sub.unsub();
+  //   });
+
+  //   return () => {};
+  // }, [events, pool]);
+
+  if (!pool) return null;
+
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
+          <b>focal -&nbsp; </b> explore the written word on Nostr
         </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+      </div>
+      <div>
+      <h1 className="text-h1">Nostr Feed</h1>
+        <NotesList notes={events} />
       </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+      {/* <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
         <a
           href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
@@ -107,7 +185,7 @@ export default function Home() {
             Instantly deploy your Next.js site to a shareable URL with Vercel.
           </p>
         </a>
-      </div>
+      </div> */}
     </main>
   )
 }
