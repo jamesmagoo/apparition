@@ -1,9 +1,8 @@
-import './globals.css'
 import type { Metadata } from 'next'
-import { Inter , Faustina, Courier_Prime} from 'next/font/google'
+import { Courier_Prime, Faustina, Inter } from 'next/font/google'
 import Navbar from './components/Navbar'
+import './globals.css'
 import Stargazer from './components/Stargazer'
-import { Canvas } from '@react-three/fiber'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -22,7 +21,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      
       <body className={faustina.className}>
         <Navbar />
         <Stargazer/>

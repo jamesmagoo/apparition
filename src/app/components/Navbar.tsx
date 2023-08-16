@@ -12,6 +12,9 @@ const Navbar = (props: Props) => {
                 </p>
             </div>
             <Link href={"./explorer"}>Stargazer</Link>
+            <Link href={"./explorer"}>Points</Link>
+            <Link href={"./explorer"}>Lens</Link>
+            <Link href={"./explorer"}>User</Link>
         </nav>
     )
 }

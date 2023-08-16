@@ -1,4 +1,3 @@
-import Link from 'next/link'
 interface Props {
     content: string;
     // user: {
@@ -21,12 +20,12 @@ export default async function NotePage({content, created_at, hashtags} : Props){
         {hashtags
           .filter((t) => hashtags.indexOf(t) === hashtags.lastIndexOf(t))
           .map((hashtag) => (
-            <li
+            <li§
               key={hashtag}
               className="bg-gray-300 text-body5 text-gray-900 font-medium rounded-24 px-12 py-4"
             >
               #{hashtag}
-            </li>
+            </li§>
           ))}
       </ul> */}
     </div>
