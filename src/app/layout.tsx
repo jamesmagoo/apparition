@@ -23,7 +23,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={faustina.className}>
         <Navbar />
-        <Stargazer/>
         {children}
       </body>
     </html>
