@@ -1,6 +1,4 @@
-import { Event } from 'nostr-tools'
-import React from 'react'
-
+import Link from 'next/link'
 interface Props {
     content: string;
     // user: {
@@ -11,15 +9,15 @@ interface Props {
     created_at: number;
     hashtags: string[];
   }
+export default async function NotePage({content, created_at, hashtags} : Props){
 
-export const NoteCard = ({content, created_at, hashtags} : Props) => {
-  return (
-    <div>
-         <p className="text-body5 text-gray-400">
+    return (
+        <div>
+         {/* <p className="text-body5 text-gray-400">
             {new Date(created_at * 1000).toISOString().split("T")[0]}
-          </p>
-        <p>{content}</p>
-        <ul className="flex flex-wrap gap-12">
+          </p> */}
+        <p>HHHHHHH</p>
+        {/* <ul className="flex flex-wrap gap-12">
         {hashtags
           .filter((t) => hashtags.indexOf(t) === hashtags.lastIndexOf(t))
           .map((hashtag) => (
@@ -30,7 +28,7 @@ export const NoteCard = ({content, created_at, hashtags} : Props) => {
               #{hashtag}
             </li>
           ))}
-      </ul>
+      </ul> */}
     </div>
-  )
+    )
 }
