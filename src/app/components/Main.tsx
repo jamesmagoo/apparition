@@ -6,7 +6,7 @@ type Props = {}
 
 const Main = () => {
   return (
-    <Stargazer/>
+    <h1>Main Component</h1>
   )
 }
 

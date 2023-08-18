@@ -39,11 +39,6 @@ const page = (props: Props) => {
   return (
 
     <div className="flex min-h-screen flex-col items-center justify-center bg-blue-100 h-max">
-      {/* <p>Orpheus was a legendary musician and poet in ancient Greek mythology, whose lyrics and melodies had the power to charm beasts, move inanimate objects, and even sway the gods.
-        He famously journeyed to the Underworld to retrieve his lost love, Eurydice. His tantalizingly
-        close yet ultimately tragic failure to bring her back to the living
-        world has made his tale a timeless symbol of love, art, and human yearning.
-      </p> */}
       <h1>{lyricsEvent.tags.find(tag => tag[0] === 'title')?.[1]}</h1>
       <div className='my-10 border border-black '>
         <ReactMarkdown
