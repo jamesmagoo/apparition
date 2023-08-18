@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 
@@ -38,17 +39,24 @@ const page = (props: Props) => {
   }
   return (
 
-    <div className="flex min-h-screen flex-col items-center justify-center bg-blue-100 h-max">
+    <div className="flex min-h-screen flex-col items-center justify-center h-max">
+      <div className='flex flex-row justify-between w-1/2'>
+        <button className='bg-red-200 border border-black text-strong '>⚡️Zap</button>
+        <p className='border-black border p-1 bg-red-200'>No. of Zaps:</p>
+      </div>
       <h1>{lyricsEvent.tags.find(tag => tag[0] === 'title')?.[1]}</h1>
-      <div className='my-10 border border-black '>
+      <p>Arctic Monkeys</p>
+   
+      <div className='my-10 border border-grey-500 rounded-lg '>
         <ReactMarkdown
-          className='bg-red-100 font-mono mx-10 border-black space-y-10'
+          className='font-mono mx-10 space-y-5'
           children={lyricsEvent.content}
           components={{
             // Map `h1` (`# heading`) to use `h2`s.
             h1: 'h2',
             // Rewrite `em`s (`*like so*`) to `i` with a red foreground color.
-            p: ({node, ...props}) => <div className='border border-black'{...props} />
+            p: ({node, ...props}) => <div className='border border-grey-500 p-5 cursor-pointer bg-white hover:bg-sky-100' onClick={()=>{console.log('Good lyric')}}{...props} />,
+            //p: ({node, ...props}) => <MyFancyRule {...props} />
           }}
         />
       </div>

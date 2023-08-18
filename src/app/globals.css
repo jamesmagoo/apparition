@@ -22,10 +22,10 @@ body {
 }
 
 /* base styles */
-body {
+/* body {
   background: #ebf0fa;
   @apply text-gray-500 m-8;
-}
+} */
 
 h1, h2 {
   @apply font-bold text-primary text-2xl;
@@ -42,16 +42,19 @@ p > a {
 
 /* nav styles */
 nav {
+  background: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);
   @apply
-    pb-4
-    border-b-2 border-gray-800
+    py-4
+    px-20
     flex items-center gap-5 
-    my-10 mx-auto 
-    max-w-5xl;
+    mb-5 mx-auto 
+    border-b-2 border-black
+    max-w-full;
 }
-nav a, nav span {
+/* nav a, nav span {
   @apply text-gray-500;
-}
+} */
+
 nav a:hover {
   @apply text-black;
 }
@@ -65,8 +68,10 @@ button {
     px-3 py-2 
     rounded-sm 
     flex justify-between items-center gap-2
-    text-sm;
+    text-sm
+    bg-yellow-600;
 }
+
 button:hover {
   @apply bg-opacity-90;
 }
