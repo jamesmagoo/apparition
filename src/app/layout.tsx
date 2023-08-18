@@ -10,7 +10,7 @@ const faustina = Faustina({ subsets: ['latin']})
 const courier =Courier_Prime({ subsets: ['latin'], weight:'400'})
 
 export const metadata: Metadata = {
-  title: 'Focal',
+  title: 'focal',
   description: 'See The Stars - A new way to explore Nostr content',
 }
 
@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={faustina.className}>
+      <body className={inter.className}>
         <Navbar />
         {children}
       </body>
